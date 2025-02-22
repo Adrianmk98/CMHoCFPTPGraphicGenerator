@@ -25,15 +25,6 @@ def determine_winner(vote_totals, remaining_votes, threshold=0.4):
     # Calculate the percentage of remaining votes needed for the second place candidate to potentially win
     percentage_needed = (leading_total - second_place_total) / remaining_votes if remaining_votes > 0 else 0
 
-    # Debugging prints to understand the state of variables
-    #print(f"Current vote totals (sorted): {sorted_totals}")
-    #print(f"Leading total: {leading_total}")
-    #print(f"Second place total: {second_place_total}")
-    #print(f"Margin between first and second: {margin}")
-    #print(f"Remaining votes: {remaining_votes}")
-    #print(f"Max possible votes for second place: {max_possible_for_other}")
-    #print(f"Percentage of remaining votes needed: {percentage_needed * 100:.1f}%")
-    #print(f"Threshold percentage: {threshold * 100:.1f}%")
 
     # Call the election if there are no remaining votes
     if remaining_votes == 0:
