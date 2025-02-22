@@ -6,22 +6,23 @@ import matplotlib.image as mpimg
 from vote_calculations import calculate_vote_totals, determine_winner, calculate_lead_margin
 from party_utils import get_leading_party
 
-
+#Adds to the total number of votes a particular candidate has in order to keep a running tally of votes
 def update_total_votes(votes_by_riding, parties_by_riding, all_parties):
     for party_name, votes in zip(parties_by_riding, votes_by_riding):
         for party in all_parties:
             if party['name'] == party_name:
-                party['pop_vote'] += votes  # Add the votes to the party's total
+                party['pop_vote'] += votes 
                 break
-
+'''
+Gets the information for all of the players, as well as the information for the riding.
+Makes sure that standard templates for the first step and last step are created.
+'''
 def generate_individual_graphics(ridings, all_parties, num_graphics, num_selected_steps):
-    # Sort ridings alphabetically by name
 
     sorted_ridings = ridings  # Keep the original order from the spreadsheet
     winner_determined = [False] * len(sorted_ridings)  # Track winner determination for each race
     winning_candidate_indices = [-1] * len(sorted_ridings)  # -1 indicates no winner yet
     winner_determined_steps = [None] * len(sorted_ridings)  # Initialize with None for each riding
-    # Initialize party colors
     party_colors = {party['name']: party['color'] for party in all_parties}
     party_seat_counts = {party['name']: party['seats'] for party in all_parties}
     # Initialize vote totals matrix for each riding
@@ -159,7 +160,6 @@ def generate_individual_graphics(ridings, all_parties, num_graphics, num_selecte
 
                     text_y_pos = y_pos + 0.15   # Center the text within the party color box
 
-                    # Define text margin based on rank
                     lead_margin = calculate_lead_margin(sorted_votes, j,num_candidates_to_display)
 
                     displayed_votes = sorted_votes[j]
@@ -226,10 +226,6 @@ def generate_individual_graphics(ridings, all_parties, num_graphics, num_selecte
                 # Add the riding name as a title above the progress bar
                 ax.text(0.5, progress_bar_y + progress_bar_height + 0.01, f'{riding["name"]}',
                         fontsize=36, ha='center', va='bottom', weight='bold')
-
-                # Create a dictionary for party seat counts using 'seats' from all_parties
-
-
                 # Example vote data for the current riding (should come from your existing data structure)
                 votes_by_riding = vote_totals_by_riding[r][step]
                 parties_by_riding = np.array(riding['party_names'])[np.argsort(-votes_by_riding)]
@@ -344,7 +340,7 @@ def generate_individual_graphics(ridings, all_parties, num_graphics, num_selecte
 
             print('Processed all ridings for all steps')
 
-# Example usage
+# Riding Input. Can be explanded for any number of the ridings. Graphics have some trouble with player counts over 4 in a single riding.
 ridings = [
 { 'name': 'Toronto',
     'final_results': [999999, 599854],
@@ -354,7 +350,7 @@ ridings = [
   }
 
 ]
-
+#Party input
 all_parties = [
     {'name': 'Conservative Party of Canada', 'color': 'blue','seats':0,'pop_vote':0},
     {'name': 'Liberal Party of Canada', 'color': 'red','seats':0,'pop_vote':0},
